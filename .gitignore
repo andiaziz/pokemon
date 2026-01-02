@@ -15,10 +15,16 @@
 /node_modules
 /public/build
 /public/hot
-/public/storage
 /storage/*.key
 /storage/pail
 /vendor
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Keep SQLite database
+!/database/*.sqlite
+
+# Keep Pokemon images in storage
+!/storage/app/public/
+!/storage/app/public/pokemon_images/

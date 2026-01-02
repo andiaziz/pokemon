@@ -1,11 +1,79 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Pokemon Fetcher
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A Laravel application that fetches Pokemon data from [PokeAPI](https://pokeapi.co/) and stores it in a local database.
+
+## Features
+
+- Fetches Pokemon data (ID 1-400) from PokeAPI
+- Filters Pokemon with weight >= 100
+- Downloads and stores Pokemon images locally
+- Stores Pokemon abilities (non-hidden only)
+- Many-to-many relationship between Pokemon and Abilities
+
+## Installation
+
+1. Clone the repository
+2. Install dependencies:
+```bash
+composer install
+```
+
+3. Copy environment file and configure your database:
+```bash
+cp .env.example .env
+```
+
+4. Generate application key:
+```bash
+php artisan key:generate
+```
+
+5. Configure your database in `.env` file:
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=pokemon
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+## Database Setup
+
+Run migrations to create the required tables:
+```bash
+php artisan migrate
+```
+
+Create storage symbolic link for images:
+```bash
+php artisan storage:link
+```
+
+## Fetch Pokemon Data
+
+Run the fetch command to download Pokemon data:
+```bash
+php artisan pokemon:fetch
+```
+
+You can also specify a custom range:
+```bash
+php artisan pokemon:fetch --start=1 --end=100
+```
+
+## Database Structure
+
+### Tables
+- `pokemons` - Stores Pokemon data (name, base_experience, weight, image_path)
+- `abilities` - Stores ability names
+- `pokemon_abilities` - Pivot table for Pokemon-Ability relationship
+
+## Images
+
+Pokemon images are stored in `storage/app/public/pokemon_images/` and accessible via `public/storage/pokemon_images/`.
+
+---
 
 ## About Laravel
 
