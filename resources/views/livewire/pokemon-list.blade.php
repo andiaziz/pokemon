@@ -134,9 +134,4 @@
     <div class="mt-4">
         {{ $pokemons->links() }}
     </div>
-
-    <!-- Record count -->
-    <div class="mt-2 text-sm text-gray-500">
-        Showing {{ $pokemons->firstItem() ?? 0 }} to {{ $pokemons->lastItem() ?? 0 }} of {{ $pokemons->total() }} results
-    </div>
 </div>
