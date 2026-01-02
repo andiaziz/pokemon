@@ -1,6 +1,6 @@
-# Pokemon Fetcher
+# Pokemon Database
 
-A Laravel application that fetches Pokemon data from [PokeAPI](https://pokeapi.co/) and stores it in a local database.
+A Laravel application that fetches Pokemon data from [PokeAPI](https://pokeapi.co/) and displays it in an interactive table.
 
 ## Features
 
@@ -9,16 +9,34 @@ A Laravel application that fetches Pokemon data from [PokeAPI](https://pokeapi.c
 - Downloads and stores Pokemon images locally
 - Stores Pokemon abilities (non-hidden only)
 - Many-to-many relationship between Pokemon and Abilities
+- Interactive data table with:
+  - Search by name
+  - Filter by weight category (Light, Medium, Heavy)
+  - Sortable columns (Name, Base Experience, Weight)
+  - Default sort by weight (heaviest first)
+  - Pagination (10, 25, 50 per page)
+  - Pokemon images displayed inline
+
+## Requirements
+
+- PHP 8.2+
+- Laravel 12
+- SQLite (or any database)
 
 ## Installation
 
-1. Clone the repository
+1. Clone the repository:
+```bash
+git clone https://github.com/andiaziz/pokemon.git
+cd pokemon
+```
+
 2. Install dependencies:
 ```bash
 composer install
 ```
 
-3. Copy environment file and configure your database:
+3. Copy environment file:
 ```bash
 cp .env.example .env
 ```
@@ -28,39 +46,42 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-5. Configure your database in `.env` file:
+5. Configure database in `.env` (SQLite is default):
 ```
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=pokemon
-DB_USERNAME=root
-DB_PASSWORD=
+DB_CONNECTION=sqlite
 ```
 
-## Database Setup
-
-Run migrations to create the required tables:
+6. Run migrations:
 ```bash
 php artisan migrate
 ```
 
-Create storage symbolic link for images:
+7. Create storage symbolic link:
 ```bash
 php artisan storage:link
 ```
 
 ## Fetch Pokemon Data
 
-Run the fetch command to download Pokemon data:
+Run the fetch command to download Pokemon data from PokeAPI:
 ```bash
 php artisan pokemon:fetch
 ```
 
-You can also specify a custom range:
-```bash
-php artisan pokemon:fetch --start=1 --end=100
-```
+This will:
+- Fetch Pokemon ID 1-400
+- Filter only Pokemon with weight >= 100
+- Download images to local storage
+- Save only non-hidden abilities
+
+## Usage
+
+Visit the homepage (`/`) to view the Pokemon database table.
+
+### Weight Filter Categories
+- **Light**: Weight 100-150
+- **Medium**: Weight 151-199
+- **Heavy**: Weight ≥200
 
 ## Database Structure
 
@@ -69,35 +90,22 @@ php artisan pokemon:fetch --start=1 --end=100
 - `abilities` - Stores ability names
 - `pokemon_abilities` - Pivot table for Pokemon-Ability relationship
 
-## Images
+## File Storage
 
-Pokemon images are stored in `storage/app/public/pokemon_images/` and accessible via `public/storage/pokemon_images/`.
+Pokemon images are stored in:
+- `storage/app/public/pokemon_images/`
+- Accessible via `public/storage/pokemon_images/`
 
----
+## Tech Stack
 
-## About Laravel
+- Laravel 12
+- Livewire 3
+- Tailwind CSS (CDN)
+- SQLite
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## License
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 ### Premium Partners
 
