@@ -4,7 +4,6 @@ namespace App\Livewire;
 
 use App\Models\Pokemon;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Blade;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Facades\Filter;
 use PowerComponents\LivewirePowerGrid\Components\SetUp\Footer;
@@ -43,10 +42,9 @@ final class PokemonTable extends PowerGridComponent
             ->add('name')
             ->add('base_experience')
             ->add('weight')
-            ->add('image_path')
-            ->add('image_html', function (Pokemon $pokemon) {
+            ->add('image_path', function (Pokemon $pokemon) {
                 $url = asset('storage/' . $pokemon->image_path);
-                return Blade::render('<div class="flex justify-center"><img src="' . $url . '" alt="' . e($pokemon->name) . '" class="w-20 h-20 object-contain rounded-lg bg-gray-50 p-1"></div>');
+                return '<div class="flex justify-center"><img src="' . $url . '" alt="' . e($pokemon->name) . '" class="w-20 h-20 object-contain rounded-lg bg-gray-50 p-1"></div>';
             })
             ->add('abilities_list', function (Pokemon $pokemon) {
                 return $pokemon->abilities->pluck('name')->join(', ');
@@ -56,7 +54,9 @@ final class PokemonTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('Image', 'image_html'),
+            Column::add()
+                ->title('Image')
+                ->field('image_path'),
 
             Column::make('Name', 'name')
                 ->sortable()

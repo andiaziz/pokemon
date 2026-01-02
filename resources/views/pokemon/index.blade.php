@@ -5,8 +5,6 @@
             <p class="mt-2 text-gray-600">Browse all Pokemon with weight ≥ 100 (IDs 1-400) - Sorted by weight (heaviest first)</p>
         </div>
 
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-            <livewire:pokemon-table />
-        </div>
+        <livewire:pokemon-list />
     </div>
 </x-layouts.app>
